@@ -31,8 +31,10 @@ metadata:
   name: backend-api
   namespace: demo-apps
 spec:
+  type: NodePort
   ports:
   - port: 8000
     targetPort: 8000
+    nodePort: 30085 # Access the API here
   selector:
     app: backend-api

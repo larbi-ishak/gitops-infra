@@ -23,4 +23,18 @@ spec:
         - name: PORT
           value: "3000"
         - name: API_URL
-          value: "http://backend-api:8000" # K8s internal DNS (change to external ingress URL if testing outside the cluster)
+          value: "http://114.119.173.132:30085" # K8s internal DNS (change to external ingress URL if testing outside the cluster)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-web
+  namespace: demo-apps
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    targetPort: 3000
+    nodePort: 30030 # Access the UI here
+  selector:
+    app: frontend-web
