@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app-of-apps
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/larbi-ishak/gitops-infra.git'
+    targetRevision: HEAD
+    path: argocd/templates  # Point directly to the folder containing child manifests
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd # Installs components into their respective namespaces configured inside the child apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
